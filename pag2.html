@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Cuna del Fútbol</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c2c2c;
+            color: #fff;
+        }
+        header {
+            background-color: #d4af37;
+            color: black;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+        header img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 120px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #2c2c2c;
+        }
+        nav a {
+            color: #d4af37;
+            padding: 1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        nav a:hover {
+            background-color: #d4af37;
+            color: black;
+        }
+        section {
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+        footer {
+            background-color: #2c2c2c;
+            color: #d4af37;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+        }
+        button {
+            background-color: #d4af37;
+            color: black;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: black;
+            color: #d4af37;
+        }
+        .contacto-info {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+        .jugadores-lista {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .jugador {
+            background-color: #444;
+            padding: 15px;
+            width: 230px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+            flex-shrink: 0;
+        }
+
+        .jugador:hover {
+            transform: scale(1.05);
+        }
+
+        .jugador img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .jugador input {
+            width: 100%;
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+        }
+
+        .jugador button {
+            background-color: #d4af37;
+            color: black;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        .jugador button:hover {
+            background-color: black;
+            color: #d4af37;
+        }
+
+        .jugador .form-group {
+            margin-bottom: 10px;
+        }
+
+        .jugador label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .jugador .promedio-container {
+            margin-top: 10px;
+        }
+
+        #login-popup {
+            display: none; /* Inicialmente oculto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #login-form {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            text-align: center;
+        }
+
+        #login-form input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #login-form button {
+            margin-top: 20px;
+            background-color: #d4af37;
+            color: black;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #login-form button:hover {
+            background-color: black;
+            color: #d4af37;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        #proximo-cumpleanero {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: white;
+            background-color: #f39c12;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            margin: 20px auto;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        #cumpleanero-info {
+            font-size: 2rem;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #cumpleanero-fecha {
+            font-size: 1.2rem;
+            color: #000000;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="C:/Users/Dilan/Desktop/cdf/img/cdfof.jpg" alt="Logo de La Cuna del Fútbol">
+        <h1>La Cuna Del Fútbol Club</h1>
+        <p>Bienvenidos a la página oficial de nuestro equipo</p>
+    </header>
+    <nav>
+        <a href="pag1.html">Inicio</a>
+        <a href="pag2.html">Jugadores</a>
+        <a href="pag1.html">Partidos</a>
+        <a href="#contacto">Contacto</a>
+        <a href="pag3.html">Entrenadores y Patrocinadores</a>
+    </nav>
+
+    <section id="jugadores">
+        <h2>Jugadores</h2>
+        <p>Modifica los datos de los jugadores.</p>
+        <div id="jugadores-lista" class="jugadores-lista"></div>
+        <button onclick="agregarJugador()" id="agregarBtn">Agregar Jugador</button>
+    </section>
+
+    <section id="proximo-cumple">
+        <h2>Próximo Cumpleañero</h2>
+        <div id="proximo-cumpleanero">
+            <div id="cumpleanero-info">Cargando...</div>
+            <div id="cumpleanero-fecha"></div>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <h2>Contacto</h2>
+        <p>¿Tienes preguntas? ¡Contáctanos!</p>
+        <div class="contacto-info">
+            <p>Teléfono: <a href="tel:+17713911596">7713911596</a></p>
+            <p>¡Llámanos para más información!</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 La Cuna del Fútbol. Todos los derechos reservados.</p>
+        <button onclick="mostrarLogin()">Iniciar sesión (Solo Administradores)</button>
+    </footer>
+
+    <div id="login-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="cerrarLoginPopup()">X</span>
+            <h3>Iniciar sesión</h3>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Usuario" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit">Iniciar sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const admin = { username: "admin", password: "1234" };
+        let jugadores = JSON.parse(localStorage.getItem('jugadores')) || [];
+        let usuario = null;
+
+        function mostrarJugadores() {
+            const listaJugadores = document.getElementById('jugadores-lista');
+            listaJugadores.innerHTML = "";
+            jugadores.forEach((jugador, index) => {
+                const div = document.createElement('div');
+                div.classList.add('jugador');
+                div.innerHTML = `
+                    <img src="${jugador.foto}" alt="Foto de ${jugador.nombre}">
+                    <div class="form-group">
+                        <label for="nombre-${index}">Nombre:</label>
+                        <input type="text" id="nombre-${index}" value="${jugador.nombre}" ${usuario !== admin.username ? "readonly" : ""} />
+                    </div>
+                    <div class="form-group">
+                        <label for="posicion-${index}">Posición:</label>
+                        <input type="text" id="posicion-${index}" value="${jugador.posicion}" ${usuario !== admin.username ? "readonly" : ""} />
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaNacimiento-${index}">Fecha de Nacimiento:</label>
+                        <input type="date" id="fechaNacimiento-${index}" value="${jugador.fechaNacimiento}" ${usuario !== admin.username ? "readonly" : ""} />
+                    </div>
+                    <div class="form-group">
+                        <label for="golesAnotados-${index}">Goles Anotados:</label>
+                        <input type="number" id="golesAnotados-${index}" value="${jugador.golesAnotados}" ${usuario !== admin.username ? "readonly" : ""} />
+                    </div>
+                    <div class="form-group">
+                        <label for="partidosJugados-${index}">Partidos Jugados:</label>
+                        <input type="number" id="partidosJugados-${index}" value="${jugador.partidosJugados}" ${usuario !== admin.username ? "readonly" : ""} oninput="calcularPromedio(${index})" />
+                    </div>
+                    <div class="promedio-container">
+                        <label for="promedioGoles-${index}">Promedio de Goles:</label>
+                        <input type="text" id="promedioGoles-${index}" value="${jugador.promedioGoles}" readonly />
+                    </div>
+                    ${usuario === admin.username ? `
+                        <div class="form-group">
+                            <label for="foto-${index}">Foto:</label>
+                            <input type="file" id="foto-${index}" ${usuario !== admin.username ? "disabled" : ""} onchange="actualizarFoto(${index})"/>
+                        </div>
+                        <button onclick="actualizarJugador(${index})">Actualizar</button>
+                        <button onclick="eliminarJugador(${index})">Eliminar</button>
+                    ` : ""}
+                `;
+                listaJugadores.appendChild(div);
+            });
+
+            mostrarProximoCumpleanero();
+        }
+
+        function actualizarFoto(index) {
+            const fotoInput = document.getElementById(`foto-${index}`);
+            const file = fotoInput.files[0];
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                jugadores[index].foto = reader.result;
+                guardarJugadores();
+                mostrarJugadores();
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function mostrarProximoCumpleanero() {
+            const cumpleaneroDiv = document.getElementById('proximo-cumpleanero');
+            const cumpleaneroInfo = document.getElementById('cumpleanero-info');
+            const cumpleaneroFecha = document.getElementById('cumpleanero-fecha');
+
+            const hoy = new Date();
+            let proximoCumpleanero = null;
+            let proximaFecha = null;
+            for (const jugador of jugadores) {
+                const fechaNacimiento = new Date(jugador.fechaNacimiento);
+                fechaNacimiento.setFullYear(hoy.getFullYear()); 
+
+                if (fechaNacimiento >= hoy && (!proximaFecha || fechaNacimiento < proximaFecha)) {
+                    proximaFecha = fechaNacimiento;
+                    proximoCumpleanero = jugador;
+                }
+            }
+
+            if (proximoCumpleanero) {
+                cumpleaneroInfo.textContent = `Próximo cumpleañero: ${proximoCumpleanero.nombre}`;
+                cumpleaneroFecha.textContent = `Cumpleaños: ${proximoCumpleanero.fechaNacimiento}`;
+            } else {
+                cumpleaneroInfo.textContent = "No hay próximos cumpleaños este mes.";
+                cumpleaneroFecha.textContent = "";
+            }
+        }
+
+        function agregarJugador() {
+            if (usuario === admin.username) {
+                const nuevoJugador = {
+                    nombre: "Nuevo Jugador",
+                    posicion: "Posición",
+                    fechaNacimiento: "2024-01-01",
+                    golesAnotados: 0,
+                    partidosJugados: 0,
+                    promedioGoles: 0,
+                    foto: "https://via.placeholder.com/150"
+                };
+                jugadores.push(nuevoJugador);
+                guardarJugadores();
+                mostrarJugadores();
+            } else {
+                alert("Solo los administradores pueden agregar jugadores.");
+            }
+        }
+
+        function eliminarJugador(index) {
+            jugadores.splice(index, 1); 
+            guardarJugadores();
+            mostrarJugadores();
+        }
+
+        function guardarJugadores() {
+            localStorage.setItem('jugadores', JSON.stringify(jugadores));
+        }
+
+        function calcularPromedio(index) {
+            const golesAnotados = parseInt(document.getElementById(`golesAnotados-${index}`).value) || 0;
+            const partidosJugados = parseInt(document.getElementById(`partidosJugados-${index}`).value) || 1;
+            const promedioGoles = golesAnotados / partidosJugados;
+            document.getElementById(`promedioGoles-${index}`).value = promedioGoles.toFixed(2);
+        }
+
+        function mostrarLogin() {
+            document.getElementById('login-popup').style.display = 'flex';
+        }
+
+        function cerrarLoginPopup() {
+            document.getElementById('login-popup').style.display = 'none';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === admin.username && password === admin.password) {
+                usuario = username;
+                alert("¡Bienvenido, Administrador!");
+                cerrarLoginPopup();
+                mostrarJugadores();
+                document.getElementById('agregarBtn').style.display = 'inline-block'; 
+            } else {
+                alert("Usuario o contraseña incorrectos.");
+            }
+        });
+
+        mostrarJugadores();
+    </script>
+</body>
+</html>

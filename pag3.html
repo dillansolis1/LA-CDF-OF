@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Cuna del Fútbol</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2c2c2c;
+            color: #fff;
+        }
+        header {
+            background-color: #d4af37;
+            color: black;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+        header img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 120px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #2c2c2c;
+            padding: 1rem 0;
+        }
+        nav a {
+            color: #d4af37;
+            padding: 1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        nav a:hover {
+            background-color: #d4af37;
+            color: black;
+        }
+        nav button {
+            background-color: #d4af37;
+            color: black;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin-left: 1rem;
+        }
+        nav button:hover {
+            background-color: black;
+            color: #d4af37;
+        }
+        section {
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+        footer {
+            background-color: #2c2c2c;
+            color: #d4af37;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+        }
+        button {
+            background-color: #d4af37;
+            color: black;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: black;
+            color: #d4af37;
+        }
+        .contacto-info {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+        .jugadores-lista {
+            display: flex;
+            flex-wrap: wrap; /* Esto hace que los elementos se ajusten a nuevas filas si es necesario */
+            justify-content: flex-start;
+            gap: 20px; /* Espacio entre los elementos */
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .jugador {
+            background-color: #444;
+            padding: 15px;
+            width: 230px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+            flex-shrink: 0;
+        }
+
+        .jugador:hover {
+            transform: scale(1.05);
+        }
+
+        .jugador img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .jugador input {
+            width: 100%;
+            margin: 8px 0;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+        }
+
+        .jugador button {
+            background-color: #d4af37;
+            color: black;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        .jugador button:hover {
+            background-color: black;
+            color: #d4af37;
+        }
+
+        .jugador .form-group {
+            margin-bottom: 10px;
+        }
+
+        .jugador label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .jugador .promedio-container {
+            margin-top: 10px;
+        }
+
+        #login-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #login-form {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 300px;
+            text-align: center;
+        }
+
+        #login-form input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #login-form button {
+            margin-top: 20px;
+            background-color: #d4af37;
+            color: black;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #login-form button:hover {
+            background-color: black;
+            color: #d4af37;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        #proximo-cumpleanero {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: white;
+            background-color: #f39c12;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            margin: 20px auto;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        #cumpleanero-info {
+            font-size: 2rem;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #cumpleanero-fecha {
+            font-size: 1.2rem;
+            color: #000000;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="C:/Users/Dilan/Desktop/cdf/img/cdfof.jpg" alt="Logo de La Cuna del Fútbol">
+        <h1>La Cuna Del Fútbol Club</h1>
+        <p>Bienvenidos a la página oficial de nuestro equipo</p>
+    </header>
+    <nav>
+        <a href="pag1.html">Inicio</a>
+        <a href="pag2.html">Jugadores</a>
+        <a href="pag1.html">Partidos</a>
+        <a href="#contacto">Contacto</a>
+        <a href="pag3.html">Entrenadores y Patrocinadores</a>
+        <button onclick="mostrarLogin()">Iniciar sesión (Solo Admin)</button>
+    </nav>
+    <main>
+        <section id="entrenadores">
+            <h2>Entrenadores</h2>
+            <div id="entrenadores-lista" class="jugadores-lista"></div>
+            <button id="agregarEntrenadorBtn" onclick="mostrarFormEntrenador()" style="display: none;">Agregar Entrenador</button>
+            <div id="form-entrenador" style="display: none;">
+                <input type="file" id="foto-entrenador" placeholder="Subir foto" />
+                <input type="text" id="nombre-entrenador" placeholder="Nombre del Entrenador" />
+                <input type="date" id="fecha-nacimiento-entrenador" placeholder="Fecha de Nacimiento" />
+                <button onclick="agregarEntrenador()">Guardar Entrenador</button>
+            </div>
+        </section>
+        <section id="patrocinadores">
+            <h2>Patrocinadores</h2>
+            <div id="patrocinadores-lista" class="jugadores-lista"></div>
+            <button id="agregarPatrocinadorBtn" onclick="mostrarFormPatrocinador()" style="display: none;">Agregar Patrocinador</button>
+            <div id="form-patrocinador" style="display: none;">
+                <input type="file" id="logo-patrocinador" placeholder="Subir logo" />
+                <input type="text" id="nombre-patrocinador" placeholder="Nombre del Patrocinador" />
+                <textarea id="descripcion-patrocinador" placeholder="Descripción del Patrocinador"></textarea>
+                <button onclick="agregarPatrocinador()">Guardar Patrocinador</button>
+            </div>
+        </section>
+    </main>
+    <div id="login-popup">
+        <div id="login-form">
+            <span class="close-popup" onclick="cerrarLoginPopup()">&times;</span>
+            <h3>Iniciar Sesión</h3>
+            <input type="text" id="username" placeholder="Usuario">
+            <input type="password" id="password" placeholder="Contraseña">
+            <button onclick="iniciarSesion()">Ingresar</button>
+        </div>
+    </div>
+    <footer>
+        <p>La Cuna del Fútbol Club | Todos los derechos reservados</p>
+    </footer>
+    <script>
+        const admin = { username: "admin", password: "1234" };
+        let usuario = null;
+        let entrenadores = JSON.parse(localStorage.getItem('entrenadores')) || [];
+        let patrocinadores = JSON.parse(localStorage.getItem('patrocinadores')) || [];
+
+        function mostrarEntrenadores() {
+            const lista = document.getElementById('entrenadores-lista');
+            lista.innerHTML = '';
+            entrenadores.forEach((entrenador, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'jugador';
+                itemDiv.innerHTML = `
+                    <img src="${entrenador.foto}" alt="Foto de ${entrenador.nombre}">
+                    <h4>${entrenador.nombre}</h4>
+                    <p>Fecha de nacimiento: ${entrenador.fechaNacimiento}</p>
+                    ${usuario === admin.username ? `<button onclick="eliminarEntrenador(${index})">Eliminar</button>` : ''}
+                `;
+                lista.appendChild(itemDiv);
+            });
+        }
+
+        function mostrarPatrocinadores() {
+            const lista = document.getElementById('patrocinadores-lista');
+            lista.innerHTML = '';
+            patrocinadores.forEach((patrocinador, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'jugador';
+                itemDiv.innerHTML = `
+                    <img src="${patrocinador.logo}" alt="Logo de ${patrocinador.nombre}">
+                    <h4>${patrocinador.nombre}</h4>
+                    <p>${patrocinador.descripcion}</p>
+                    ${usuario === admin.username ? `<button onclick="eliminarPatrocinador(${index})">Eliminar</button>` : ''}
+                `;
+                lista.appendChild(itemDiv);
+            });
+        }
+
+        function mostrarFormEntrenador() {
+            document.getElementById('form-entrenador').style.display = 'block';
+        }
+
+        function mostrarFormPatrocinador() {
+            document.getElementById('form-patrocinador').style.display = 'block';
+        }
+
+        function agregarEntrenador() {
+            if (usuario !== admin.username) {
+                alert('Solo los administradores pueden agregar entrenadores.');
+                return;
+            }
+            const foto = document.getElementById('foto-entrenador').files[0];
+            const nombre = document.getElementById('nombre-entrenador').value;
+            const fechaNacimiento = document.getElementById('fecha-nacimiento-entrenador').value;
+
+            if (foto && nombre && fechaNacimiento) {
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                    entrenadores.push({ foto: reader.result, nombre, fechaNacimiento });
+                    localStorage.setItem('entrenadores', JSON.stringify(entrenadores));
+                    mostrarEntrenadores();
+                };
+                reader.readAsDataURL(foto);
+                document.getElementById('form-entrenador').style.display = 'none';
+            }
+        }
+
+        function agregarPatrocinador() {
+            if (usuario !== admin.username) {
+                alert('Solo los administradores pueden agregar patrocinadores.');
+                return;
+            }
+            const logo = document.getElementById('logo-patrocinador').files[0];
+            const nombre = document.getElementById('nombre-patrocinador').value;
+            const descripcion = document.getElementById('descripcion-patrocinador').value;
+
+            if (logo && nombre && descripcion) {
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                    patrocinadores.push({ logo: reader.result, nombre, descripcion });
+                    localStorage.setItem('patrocinadores', JSON.stringify(patrocinadores));
+                    mostrarPatrocinadores();
+                };
+                reader.readAsDataURL(logo);
+                document.getElementById('form-patrocinador').style.display = 'none';
+            }
+        }
+
+        function eliminarEntrenador(index) {
+            entrenadores.splice(index, 1);
+            localStorage.setItem('entrenadores', JSON.stringify(entrenadores));
+            mostrarEntrenadores();
+        }
+
+        function eliminarPatrocinador(index) {
+            patrocinadores.splice(index, 1);
+            localStorage.setItem('patrocinadores', JSON.stringify(patrocinadores));
+            mostrarPatrocinadores();
+        }
+
+        function mostrarLogin() {
+            document.getElementById('login-popup').style.display = 'flex';
+        }
+
+        function cerrarLoginPopup() {
+            document.getElementById('login-popup').style.display = 'none';
+        }
+
+        function iniciarSesion() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === admin.username && password === admin.password) {
+                usuario = username;
+                alert('Bienvenido, Administrador');
+                document.getElementById('agregarEntrenadorBtn').style.display = 'inline-block';
+                document.getElementById('agregarPatrocinadorBtn').style.display = 'inline-block';
+                document.getElementById('login-popup').style.display = 'none';
+                mostrarEntrenadores();
+                mostrarPatrocinadores();
+            } else {
+                alert('Usuario o contraseña incorrectos');
+            }
+        }
+
+        mostrarEntrenadores();
+        mostrarPatrocinadores();
+    </script>
+</body>
+</html>
